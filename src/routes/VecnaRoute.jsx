@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../context/GameContext";
 import ChildCard from "../components/ChildCard";
+import Pagination from "../components/Pagination";
 
-const CONNECTION_TIME = 7;
+const CONNECTION_TIME = 4;
 
 const VecnaRoute = () => {
   const {
@@ -17,6 +18,29 @@ const VecnaRoute = () => {
   } = useContext(GameContext);
 
   const [showDestroyed, setShowDestroyed] = useState(false);
+  const ITEMS_PER_PAGE = 12;
+  const [deadPage, setDeadPage] = useState(1);
+
+  const getOrdinal = (n) => {
+  if (n % 10 === 1 && n % 100 !== 11) return "st";
+  if (n % 10 === 2 && n % 100 !== 12) return "nd";
+  if (n % 10 === 3 && n % 100 !== 13) return "rd";
+  return "th";
+};
+
+const formatOrdinalCentury = (c) => {
+  if (c > 0) {
+    return `${c}${getOrdinal(c)} Century`;
+  }
+
+  if (c === 0) {
+    return `1st Century BC`;
+  }
+
+  const abs = Math.abs(c) + 1;
+  return `${abs}${getOrdinal(abs)} Century BC`;
+};
+
 
 useEffect(() => {
   startVecna();
@@ -52,38 +76,45 @@ useEffect(() => {
     (elapsed / CONNECTION_TIME) * 100
   );
 
+const deadChildren = [...history]
+  .filter(h => h.status === "DESTROYED")
+  .reverse()
+  .flatMap(h =>
+    h.dead.map(child => ({
+      ...child,
+      timestamp: h.timestamp
+    }))
+  );
+
+const totalDeadPages = Math.ceil(deadChildren.length / ITEMS_PER_PAGE);
+
+const paginatedDead = deadChildren.slice(
+  (deadPage - 1) * ITEMS_PER_PAGE,
+  deadPage * ITEMS_PER_PAGE
+);
+
   return (
-    <div className="relative min-h-screen px-10 py-16 text-neutral-200">
-
-      <div
-        className="fixed inset-0 -z-10 bg-cover bg-center"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.1)),
-            url("https://media.giphy.com/media/axdUGyhEPyZ2hwMtaa/giphy.gif")
-          `,
-        }}
-      />
-
+    <div className="relative min-h-screen px-10 py-16 text-neutral-200 ">
+      <div className="vecna-bg" />
+      
       {showDestroyed && (
-  <div className="fixed inset-0 z-50 bg-black flex items-center justify-center animate-pulse pointer-events-auto">
-    <p className="text-red-700 text-5xl tracking-[0.4em]">
-      CENTURY DESTROYED
-    </p>
-  </div>
-)}
+        <div className="fixed inset-0 z-50 bg-black flex items-center justify-center animate-pulse pointer-events-auto">
+          <p className="text-red-700 text-5xl tracking-[0.4em]">
+            CENTURY DESTROYED
+          </p>
+        </div>
+      )}
 
 
       {!showDestroyed && (
         <>
-          <h1 className="text-center text-6xl tracking-[0.6em] text-red-700 mb-4">
+          <h1 className="vecna-title-glow">
             VECNA
           </h1>
 
-          <p className="text-center text-2xl tracking-widest text-red-500 mb-16">
-  CENTURY {Math.max(vecnaCentury, 1)}
-</p>
-
+          <p className="vecna-century-glow">
+            {formatOrdinalCentury(vecnaCentury)}
+          </p>
 
           {activeChild && (
             <div className="max-w-3xl mx-auto mb-24 p-10 rounded-3xl bg-black/85 border border-red-900 text-center">
@@ -91,7 +122,12 @@ useEffect(() => {
                 MENTAL CONNECTION
               </p>
 
-              <ChildCard child={activeChild} status="cursed" />
+              <ChildCard
+                child={activeChild}
+                status="cursed"
+                showImage={false}
+                className="vecna-card vecna-cursed"
+              />
 
               <div className="relative mt-8 flex justify-center items-center">
                 <svg width="160" height="160" className="-rotate-90">
@@ -135,34 +171,45 @@ useEffect(() => {
                   key={child.id}
                   child={child}
                   status="cursed"
+                  showImage={false}
+                  className="vecna-card vecna-cursed"
                 />
               ))}
             </div>
           </section>
 
-          <section className="mt-32 opacity-70">
-  <h2 className="text-xl tracking-[0.4em] text-neutral-400 mb-10">
-    MEMORIAL OF LOST CHILDREN
-  </h2>
+          <section className="mt-32 opacity-100">
+            <div className="flex items-center gap-3 mb-10">
+              <h2 className="tracking-[0.4em]">DEAD RECORDS</h2>
+            </div>
 
-  {history
-    .filter(h => h.status === "DESTROYED")
-    .map(h => (
-      <div key={h.century} className="mb-16">
+            <div className="grid grid-cols-4 gap-4">
+              {paginatedDead.map(child => {
+                const isNew =
+                  Date.now() - (child.timestamp ?? 0) < 24 * 60 * 60 * 1000;
 
-        <div className="grid grid-cols-5 gap-4">
-          {h.dead.map(child => (
-            <ChildCard
-              key={child.id}
-              child={child}
-              status="dead"
-            />
-          ))}
-        </div>
-      </div>
-    ))}
-</section>
+                return (
+                  <ChildCard
+                    key={child.id}
+                    child={child}
+                    status="dead"
+                    showImage={false}
+                    className="vecna-card"
+                    isNew={isNew}          
+                  />
+                );
+              })}
+            </div>
 
+
+            {totalDeadPages > 1 && (
+              <Pagination
+                currentPage={deadPage}
+                totalPages={totalDeadPages}
+                onPageChange={setDeadPage}
+              />
+            )}
+          </section>
         </>
       )}
     </div>

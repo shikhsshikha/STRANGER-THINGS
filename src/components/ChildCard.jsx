@@ -1,76 +1,101 @@
 import { Link } from "react-router-dom";
 
 const statusStyles = {
-  normal: "border-neutral-800",
-  cursed:
-    "border-red-900 bg-red-950/30 shadow-[0_0_20px_rgba(120,0,0,0.35)]",
-  saved:
-    "border-blue-900 bg-blue-950/30 shadow-[0_0_20px_rgba(0,80,160,0.3)]",
-  dead:
-    "border-neutral-700 bg-neutral-900/70 opacity-60",
+  normal: "border-white/10",
+  cursed: "border-red-700/40 shadow-[0_0_25px_rgba(180,0,0,0.45)]",
+  saved:  "border-blue-600/40 shadow-[0_0_25px_rgba(0,120,255,0.45)]",
+  dead:   "border-neutral-600/30",
 };
 
-const ChildCard = ({ child, status = "normal" }) => {
-  const isCursed = status === "cursed";
-
+const ChildCard = ({
+  child,
+  status = "normal",
+  showImage = true,  
+  className = "",
+}) => {
   return (
-    <Link
-      to={`/child/${child.id}`}
-      className="block relative z-20"
-      onClick={(e) => e.stopPropagation()}   
+    <Link to={`/child/${child.id}`} className="block">
+    <div
+      className={`
+        rounded-2xl
+        bg-black/35
+        backdrop-blur-xl
+        border border-white/10
+        shadow-[0_15px_45px_rgba(0,0,0,0.85)]
+        transition-all duration-300
+        hover:scale-[1.05]
+        hover:shadow-[0_25px_70px_rgba(0,0,0,0.95)]
+        flex flex-col items-center
+        ${showImage ? "h-45" : "py-6"}
+        ${statusStyles[status]}
+        ${className}
+      `}
     >
-      <div
-        className={`
-          group relative
-          rounded-md border
-          px-3 py-2
-          bg-black/80
-          transition-all duration-300
-          ${statusStyles[status]}
-          h-21
-          flex flex-col justify-center
-          overflow-hidden
-          cursor-pointer
-        `}
-      >
-        {isCursed && (
-          <div className="absolute inset-0 cursed-veins rounded-md pointer-events-none" />
+
+        {showImage && (
+          <div className="mt-4 mb-3">
+            <div className="w-20 h-20 rounded-full overflow-hidden border border-white/30">
+              <img
+                src={child.image}
+                alt={child.fullName}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         )}
 
-        <div className="absolute inset-0 bg-linear-to-br from-white/10 via-white/5 to-transparent pointer-events-none" />
 
-        <div className="relative z-10">
-          <h3 className="text-[13px] font-semibold tracking-[0.16em] uppercase text-neutral-100 leading-tight">
-            {child.fullName}
-          </h3>
+        <div className="px-4 text-center flex flex-col items-center">
+        <h3
+          className="
+            text-sm
+            font-semibold
+            tracking-[0.18em]
+            uppercase
+            drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]
+            text-neutral-100
+            leading-snug
+            line-clamp-2        
+            min-h-9        
+          "
+        >
+          {child.fullName}
+        </h3>
 
-          <p className="mt-0.5 text-[10px] tracking-wider text-neutral-400">
-            {child.city}
-          </p>
-
-          {status !== "normal" && (
-            <p
-              className={`mt-1 text-[9px] uppercase tracking-[0.3em]
-                ${
-                  status === "cursed"
-                    ? "text-red-400"
-                    : status === "saved"
-                    ? "text-blue-400"
-                    : "text-neutral-400"
-                }
-              `}
-            >
-              {status === "cursed" && "UNDER INFLUENCE"}
-              {status === "saved" && "RECOVERED"}
-              {status === "dead" && "LOST"}
-            </p>
-          )}
-        </div>
+        <p
+          className="
+            mt-1
+            text-xs
+            tracking-wider
+            text-neutral-400
+            truncate            
+          "
+        >
+          {child.city}
+        </p>
       </div>
 
-      {isCursed && (
-        <div className="mt-1 h-0.75 w-full rounded-full bg-linear-to-r from-red-900 via-red-600 to-red-900 pointer-events-none" />
-      )}
+
+        {status !== "normal" && (
+          <p
+            className={`
+              mt-2 text-[10px] uppercase tracking-[0.35em]
+              ${
+                status === "cursed"
+                  ? "text-red-400"
+                  : status === "saved"
+                  ? "text-blue-400"
+                  : "text-neutral-400"
+              }
+            `}
+          >
+            {status === "cursed" && "CURSED"}
+            {status === "saved" && "SAVED"}
+            {status === "dead" && "DEAD"}
+          </p>
+        )}
+
+      </div>
     </Link>
   );
 };

@@ -14,25 +14,25 @@ body {
   z-index: -1;
   pointer-events: none;
 
-  background-image: url("https://tse1.mm.bing.net/th/id/OIP.La0ij5Wq-dQg2j1VUOCppAHaEK?pid=Api&P=0&h=180");
+  background-image: url("https://wallpaperaccess.com/full/2866711.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  filter: blur(3px) brightness(95%) contrast(115%);
-  animation: bgZoomPulse 30s ease-in-out infinite alternate;
+  filter: contrast(120%) brightness(120%) saturate(110%);
+
+  animation: strangerPulse 28s ease-in-out infinite;
 }
 
-@keyframes bgZoomPulse {
+@keyframes strangerPulse {
   0% {
-    transform: scale(1);
-    opacity: 0.75;
+    filter: contrast(120%) brightness(108%) saturate(110%);
   }
   100% {
-    transform: scale(1.08);
-    opacity: 0.85;
+    filter: contrast(130%) brightness(112%) saturate(115%);
   }
 }
+
 
 .vecna-bg {
   position: fixed;
@@ -40,27 +40,440 @@ body {
   z-index: -1;
   pointer-events: none;
 
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),
-    url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWRieHY0dngzMjB4ejVuaDR5NDV5Yjd1dHR2dnp5djk3MHl4Ymg1ZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/F1cehBDCMnsukCPUXo/giphy.gif");
-
-  background-size: cover;
+  background-image: url("https://images2.alphacoders.com/140/1405474.jpg");
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 
-  filter: blur(2px) brightness(45%) contrast(120%);
-  animation: vecnaBreath 22s ease-in-out infinite alternate;
+  filter: contrast(110%) brightness(105%) saturate(105%);
+
+  animation: vecnaPulse 24s ease-in-out infinite;
 }
+
 
 @keyframes vecnaBreath {
   0% {
     transform: scale(1);
-    opacity: 0.65;
+    opacity: 1;
   }
   100% {
     transform: scale(1.08);
+    opacity: 1.08;
+  }
+}
+
+.vecna-card {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(10,10,10,0.85),
+    rgba(0,0,0,0.95)
+  );
+  border-radius: 1.25rem;
+  border: 1px solid rgba(160,0,0,0.35);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.8),
+    inset 0 0 0 1px rgba(255,255,255,0.03);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.vecna-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow:
+    0 18px 45px rgba(0,0,0,0.9),
+    0 0 25px rgba(180,0,0,0.25);
+}
+
+.vecna-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(180,0,0,0.25),
+    transparent 70%
+  );
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.vecna-name {
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.18em;
+  color: #f5f5f5;
+}
+
+.vecna-location {
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+}
+
+.vecna-status-cursed {
+  color: #dc2626;
+  letter-spacing: 0.35em;
+  font-size: 0.7rem;
+}
+
+.vecna-status-dead {
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.35em;
+  font-size: 0.7rem;
+}
+
+.vecna-cursed {
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+
+.vecna-distort {
+  background: radial-gradient(circle, rgba(120,0,0,0.35), rgba(0,0,0,0.85));
+  animation: screenShake 0.15s infinite;
+}
+
+@keyframes screenShake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes defeatFade {
+  0% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-defeatFade {
+  animation: defeatFade 1.8s ease-out forwards;
+}
+
+.eleven-good {
+  background: radial-gradient(circle, rgba(80,160,255,0.08), transparent 70%);
+  animation: goodPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes goodPulse {
+  0%,100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+
+.children-glass-card {
+  background: linear-gradient(
+    145deg,
+    rgba(20, 10, 5, 0.55),
+    rgba(0, 0, 0, 0.65)
+  );
+
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+
+  border: 1px solid rgba(255, 120, 40, 0.18);
+
+  box-shadow:
+    0 0 30px rgba(120, 30, 0, 0.35),
+    inset 0 0 18px rgba(255, 180, 80, 0.06);
+
+  transition: all 0.4s ease;
+}
+
+.children-glass-card:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 55px rgba(200, 60, 0, 0.7),
+    inset 0 0 25px rgba(255, 200, 120, 0.12);
+}
+
+.st-main-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  letter-spacing: 0.25em;
+  transform: rotate(180deg);
+  color: #fca311;
+  opacity: 0.8;
+  text-shadow:
+    0 0 12px rgba(255, 140, 0, 0.5),
+    0 0 30px rgba(180, 0, 0, 0.8);
+  user-select: none;
+  pointer-events: none;
+}
+.st-glow {
+  animation: stGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes stGlow {
+  0% {
+    text-shadow:
+      0 0 10px rgba(255, 140, 0, 0.3),
+      0 0 25px rgba(180, 0, 0, 0.4);
+  }
+  100% {
+    text-shadow:
+      0 0 18px rgba(255, 160, 40, 0.6),
+      0 0 45px rgba(200, 0, 0, 0.9);
+  }
+}
+
+.eleven-glow {
+  animation: elevenPulse 3.5s ease-in-out infinite;
+}
+
+
+.vecna-title-glow {
+  text-align: center;
+  font-size: 3.75rem; 
+  letter-spacing: 0.7em;
+  margin-bottom: 2.5rem;
+  color: #b91c1c;
+  font-family: "Cinzel Decorative", serif;
+
+  text-shadow:
+    0 0 15px rgba(180, 0, 0, 0.6),
+    0 0 35px rgba(120, 0, 0, 0.6),
+    0 0 60px rgba(80, 0, 0, 0.4);
+
+  animation: vecnaPulse 3.5s ease-in-out infinite;
+}
+
+
+.vecna-century-glow {
+  text-align: center;
+  font-size: 3rem; 
+  letter-spacing: 0.35em;
+  margin-bottom: 3rem;
+  color: #dc2626;
+  font-family: "Cinzel", serif;
+
+  text-shadow:
+    0 0 10px rgba(255, 0, 0, 0.5),
+    0 0 30px rgba(180, 0, 0, 0.45);
+
+  animation: vecnaPulseSoft 4s ease-in-out infinite;
+}
+
+
+@keyframes vecnaPulse {
+  0% {
+    text-shadow:
+      0 0 12px rgba(180, 0, 0, 0.5),
+      0 0 30px rgba(120, 0, 0, 0.5);
+  }
+  50% {
+    text-shadow:
+      0 0 22px rgba(98, 9, 9, 0.9),
+      0 0 55px rgba(96, 12, 12, 0.9),
+      0 0 85px rgba(120, 0, 0, 0.7);
+  }
+  100% {
+    text-shadow:
+      0 0 12px rgba(180, 0, 0, 0.5),
+      0 0 30px rgba(120, 0, 0, 0.5);
+  }
+}
+
+
+.vecna-glow {
+  animation: vecnaPulse 2.8s ease-in-out infinite;
+}
+
+.eleven-title-glow {
+  text-align: center;
+  font-family: "Cinzel Decorative", "Cinzel", serif;
+  font-size: 4.5rem;
+  letter-spacing: 0.7em;
+  text-transform: uppercase;
+  color: #93c5fd;
+
+  text-shadow:
+    0 0 18px rgba(100, 180, 255, 0.6),
+    0 0 45px rgba(18, 83, 161, 0.45),
+    0 0 85px rgba(6, 35, 76, 0.3);
+
+  animation: elevenTitlePulse 4s ease-in-out infinite;
+}
+
+.eleven-century-glow {
+  text-align: center;
+  font-family: "Cinzel", serif;
+  font-size: 2.7rem;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: #7dd3fc;
+
+  text-shadow:
+    0 0 12px rgba(8, 78, 131, 0.6),
+    0 0 28px rgba(19, 71, 110, 0.4),
+    0 0 55px rgba(30, 120, 255, 0.25);
+
+  animation: elevenCenturyPulse 3.5s ease-in-out infinite;
+}
+@keyframes elevenTitlePulse {
+  0%, 100% {
     opacity: 0.85;
   }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes elevenCenturyPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(80, 180, 255, 0.4);
+  }
+  50% {
+    text-shadow:
+      0 0 22px rgba(120, 210, 255, 0.85),
+      0 0 45px rgba(80, 180, 255, 0.6);
+  }
+}
+
+.eleven-glow:hover,
+.vecna-glow:hover {
+  animation-duration: 1.2s;
+}
+
+.status-century-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 6rem;
+  width: 100%;
+
+  margin: 4rem auto 3rem;
+  text-align: center;
+
+  white-space: nowrap;     
+}
+.status-eleven,
+.status-vecna {
+  white-space: nowrap;     
+  font-size: 2rem;
+  letter-spacing: 0.25em;
+}
+
+
+.status-eleven {
+  font-family: "Cinzel", serif;
+  color: #7dd3fc;
+
+  text-shadow:
+    0 0 12px rgba(14, 114, 160, 0.6),
+    0 0 30px rgba(59, 130, 246, 0.5),
+    0 0 55px rgba(37, 99, 235, 0.35);
+}
+
+.status-vecna {
+  font-family: "Cinzel", serif;
+  color: #ef4444;
+
+  text-shadow:
+    0 0 12px rgba(160, 13, 13, 0.6),
+    0 0 30px rgba(78, 11, 11, 0.55),
+    0 0 55px rgba(127, 29, 29, 0.4);
+}
+
+
+.stranger-title {
+  font-family: 'Cinzel Decorative', serif;
+  color: #ff9f1c;
+  opacity: 0.85;
+  animation: moltenGlow 6s ease-in-out infinite;
+}
+
+@keyframes moltenGlow {
+  0%, 100% {
+    text-shadow:
+      0 0 12px rgba(255, 120, 20, 0.4),
+      0 0 30px rgba(150, 20, 0, 0.6);
+  }
+  50% {
+    text-shadow:
+      0 0 25px rgba(255, 150, 40, 0.8),
+      0 0 60px rgba(200, 30, 0, 0.9);
+  }
+}
+
+.eleven-title {
+  font-family: 'Orbitron', sans-serif;
+  color: #9ad6e8;
+  animation: elevenPulse 5s ease-in-out infinite;
+}
+
+@keyframes elevenPulse {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(150, 220, 255, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 25px rgba(180, 240, 255, 0.7);
+  }
+}
+
+.vecna-title {
+  font-family: 'Cinzel Decorative', serif;
+  color: #b11226;
+  animation: vecnaPulse 3.2s cubic-bezier(.4,0,.6,1) infinite;
+}
+
+@keyframes vecnaPulse {
+  0% {
+    text-shadow: 0 0 8px rgba(120, 0, 0, 0.5);
+  }
+  40% {
+    text-shadow: 0 0 40px rgba(200, 0, 0, 0.9);
+  }
+  100% {
+    text-shadow: 0 0 12px rgba(120, 0, 0, 0.6);
+  }
+}
+
+
+.eleven-great {
+  background:
+    linear-gradient(120deg, rgba(120,0,255,0.08), rgba(0,120,255,0.05));
+  animation: greatFlicker 0.15s infinite alternate;
+}
+
+@keyframes greatFlicker {
+  from { opacity: 0.35; }
+  to   { opacity: 0.55; }
+}
+
+.eleven-excellent {
+  background:
+    radial-gradient(circle at center, rgba(255,200,80,0.15), transparent 65%);
+  animation: excellentSurge 1.2s infinite alternate;
+}
+
+@keyframes excellentSurge {
+  0% {
+    opacity: 0.4;
+    filter: contrast(110%);
+  }
+  100% {
+    opacity: 0.8;
+    filter: contrast(140%);
+  }
+}
+
+@keyframes eraShift {
+  0% { opacity: 0; transform: scale(0.9); }
+  40% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1.2); }
+}
+
+.animate-eraShift {
+  animation: eraShift 3s ease-in-out forwards;
 }
 
 .child-detail-bg {
@@ -69,28 +482,14 @@ body {
   z-index: -1;
   pointer-events: none;
 
-  background-image:
-    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.45)),
-    url("https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcW03bWVydW56bHJndGp1NjUyOWk4eG5vZzQ4cWN2NTYzMHRrZTlhbiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/6fXgh2osqMFvHOfdo7/giphy.gif");
-
+  background-image: url("https://images4.alphacoders.com/145/145188.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  filter: brightness(105%) contrast(110%);
-  animation: vecnaDetailPulse 28s ease-in-out infinite alternate;
+  filter: contrast(120%) brightness(108%) saturate(110%);
 }
 
-@keyframes vecnaDetailPulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1.04);
-    opacity: 1;
-  }
-}
 
 @keyframes veinPulse {
   0% {
@@ -153,4 +552,63 @@ body {
 
 .animate-fadeIn {
   animation: fadeIn 1.2s ease-out forwards;
+}
+
+
+.cracked-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://i.imgur.com/0Z8FQYB.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.cracked-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255,255,255,0.08) 50%,
+    transparent 60%
+  );
+  animation: crackFlash 6s infinite;
+  pointer-events: none;
+}
+
+@keyframes crackFlash {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.15; }
+}
+
+
+@keyframes crackFlicker {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.dead-crack::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("https://i.imgur.com/9R8J6xM.png"); 
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  pointer-events: none;
+  animation: crackFlicker 3s infinite;
+}
+
+.dead-fade {
+  filter: grayscale(100%) contrast(0.9);
+  opacity: 0.75;
 }

@@ -1,0 +1,144 @@
+.game-intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #140000, #000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.rules-list strong {
+  color: #4cc9f0;
+  text-shadow: 0 0 12px rgba(76, 201, 240, 0.6);
+  letter-spacing: 0.1em;
+}
+
+.game-intro-modal {
+  width: 92%;
+  max-width: 720px;
+  background: linear-gradient(180deg, rgba(12,0,0,0.96), rgba(0,0,0,0.98));
+  border: 1px solid rgba(255, 80, 40, 0.25);
+  box-shadow:
+    0 0 90px rgba(180, 40, 0, 0.55),
+    inset 0 0 50px rgba(255, 100, 50, 0.06);
+  padding: 48px;
+  border-radius: 16px;
+  animation: modalEnter 0.8s ease;
+}
+
+.game-title {
+  text-align: center;
+  font-family: "Cinzel Decorative", serif;
+  letter-spacing: 0.45em;
+  color: #f5b042;
+  text-shadow: 0 0 35px rgba(255, 150, 40, 0.7);
+}
+
+.game-subtitle {
+  text-align: center;
+  margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 42px;
+}
+
+.rules-block {
+  margin-bottom: 28px;
+}
+
+.rules-heading {
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: #ff6a3d;
+  margin-bottom: 10px;
+}
+
+.rules-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.85);
+}
+
+.rules-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.rules-list li {
+  font-size: 14px;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.8);
+  position: relative;
+  padding-left: 18px;
+}
+
+.rules-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #ff3d2e;
+}
+
+.danger .rules-heading {
+  color: #c1121f;
+}
+
+.danger-text {
+  color: rgba(255,180,180,0.9);
+}
+
+.rules-footer {
+  text-align: center;
+  margin-top: 36px;
+}
+
+.confirm-btn {
+  padding: 14px 36px;
+  background: linear-gradient(
+    135deg,
+    #9b111e,
+    #e10600
+  );
+  border: none;
+  border-radius: 10px;
+
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+
+  cursor: pointer;                 
+  box-shadow: none;                
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.confirm-btn:hover {
+  transform: scale(1.06);
+
+  background: linear-gradient(
+    135deg,
+    #c4161c,
+    #ff2a2a
+  );
+
+  box-shadow:
+    0 0 25px rgba(255, 40, 40, 0.6),
+    0 0 55px rgba(255, 0, 0, 0.9);
+}
+
+
+@keyframes modalEnter {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

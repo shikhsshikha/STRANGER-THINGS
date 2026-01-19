@@ -3,22 +3,19 @@ import { childrenData } from "../data/childrenData";
 
 export const GameContext = createContext();
 
-const CONNECTION_TIME = 7;
+const CONNECTION_TIME = 4;
 const TOTAL = 12;
 
 const initialState = {
   allChildren: childrenData,
-  vecnaCentury: 1,
-  centuryStatus: "IDLE", 
+  vecnaCentury: 1,      
+  elevenCentury: 1,     
+  centuryStatus: "IDLE",
   vecnaQueue: [],
   currentIndex: 0,
   elapsed: 0,
   cursedChildren: [],
   history: [],
-};
-
-const resetGame = () => {
-  dispatch({ type: "RESET_GAME" });
 };
 
 
@@ -55,53 +52,61 @@ function gameReducer(state, action) {
         ...state,
         centuryStatus: "DESTROYED",
         vecnaCentury: state.vecnaCentury + 1,
+        elevenCentury: state.elevenCentury - 1, 
         history: [
           ...state.history,
           {
             century: state.vecnaCentury,
             status: "DESTROYED",
             dead: state.vecnaQueue,
+            timestamp: Date.now(),   
           },
         ],
+
       };
 
     case "ELEVEN_WINS": {
-  if (state.centuryStatus !== "RUNNING") {
-    return state;
-  }
+      if (state.centuryStatus !== "RUNNING") return state;
 
-  const next = state.vecnaCentury - 1;
+      const nextVecna = state.vecnaCentury - 1;
+      const nextEleven = state.elevenCentury + 1;
 
-  if (next <= 0) {
-    return {
-      ...state,
-      vecnaCentury: 0,
-      centuryStatus: "VECNA_DEFEATED",
-      history: [
-        ...state.history,
-        {
-          century: state.vecnaCentury,
-          status: "SAVED",
-          saved: state.cursedChildren,
-        },
-      ],
-    };
-  }
+      if (nextVecna <= 0) {
+        return {
+          ...state,
+          vecnaCentury: 0,
+          elevenCentury: nextEleven,
+          centuryStatus: "VECNA_DEFEATED",
+          history: [
+            ...state.history,
+            {
+              century: state.vecnaCentury,
+              status: "SAVED",
+              saved: state.cursedChildren,
+              timestamp: Date.now(),   
+            }
+          ],
+        };
+      }
 
-  return {
-    ...state,
-    vecnaCentury: next,          
-    centuryStatus: "SAVED",      
-    history: [
-      ...state.history,
-      {
-        century: state.vecnaCentury,
-        status: "SAVED",
-        saved: state.cursedChildren,
-      },
-    ],
-  };
-}
+      return {
+        ...state,
+        vecnaCentury: nextVecna,
+        elevenCentury: nextEleven,
+        centuryStatus: "SAVED",
+        history: [
+          ...state.history,
+          {
+            century: state.vecnaCentury,
+            status: "SAVED",
+            saved: state.cursedChildren,
+            timestamp: Date.now(),   
+          },
+        ],
+      };
+    }
+
+
 case "RESET_GAME":
   return {
     ...initialState,
@@ -122,7 +127,6 @@ export const GameProvider = ({ children }) => {
   };
 
 
-  /* ---------------- TIMER ---------------- */
   useEffect(() => {
     if (state.centuryStatus !== "RUNNING") return;
 
@@ -133,7 +137,7 @@ export const GameProvider = ({ children }) => {
     return () => clearInterval(timerRef.current);
   }, [state.centuryStatus]);
 
-  /* ---------------- CURSING LOOP ---------------- */
+
   useEffect(() => {
     if (state.centuryStatus !== "RUNNING") return;
     if (state.elapsed < CONNECTION_TIME) return;
@@ -142,7 +146,7 @@ export const GameProvider = ({ children }) => {
     dispatch({ type: "CURSE_CHILD" });
   }, [state.elapsed, state.centuryStatus, state.currentIndex]);
 
-  /* ---------------- VECNA COMPLETES ---------------- */
+
   useEffect(() => {
     if (state.currentIndex !== TOTAL) return;
     if (state.centuryStatus !== "RUNNING") return;
@@ -151,7 +155,7 @@ export const GameProvider = ({ children }) => {
     dispatch({ type: "VECNA_WINS" });
   }, [state.currentIndex, state.centuryStatus]);
 
-  /* ---------------- AUTO RESTART ---------------- */
+
   useEffect(() => {
     if (
       state.centuryStatus !== "SAVED" &&
@@ -172,7 +176,7 @@ export const GameProvider = ({ children }) => {
     return () => clearTimeout(t);
   }, [state.centuryStatus]);
 
-  /* ---------------- START GAME ---------------- */
+  
   const startVecna = () => {
   if (state.centuryStatus !== "IDLE") return;
 
